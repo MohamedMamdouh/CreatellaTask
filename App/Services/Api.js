@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'https://api.github.com/') => {
+const create = (baseURL = 'http://localhost:3000') => {
   // ------
   // STEP 1
   // ------
@@ -14,7 +14,8 @@ const create = (baseURL = 'https://api.github.com/') => {
     baseURL,
     // here are some default headers
     headers: {
-      'Cache-Control': 'no-cache'
+      'Content-Type': 'application/vnd.api+json',
+      'Accept': 'v1'
     },
     // 10 second timeout...
     timeout: 10000
@@ -36,7 +37,7 @@ const create = (baseURL = 'https://api.github.com/') => {
   //
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
+  const getProducts = (_limit) => api.get('api/products', {_limit})
 
   // ------
   // STEP 3
@@ -54,7 +55,7 @@ const create = (baseURL = 'https://api.github.com/') => {
     // a list of the API functions from step 2
     getRoot,
     getRate,
-    getUser
+    getProducts
   }
 }
 
