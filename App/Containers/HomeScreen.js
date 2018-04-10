@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, FlatList, View, StyleSheet, TouchableOpacity} from 'react-native'
+import { ScrollView, Text, FlatList, View, StyleSheet, TouchableOpacity,ActivityIndicator} from 'react-native'
 import { connect } from 'react-redux'
 import PrductsActions from '../Redux/ProductsRedux'
 import AdsActions from '../Redux/AdsRedux'
@@ -30,11 +30,8 @@ class HomeScreen extends Component {
 
   _renderItem = ({item:{price, date, size, face},index}) => {
     if((index !== 0) && index % 20 === 0){
-      let adNum = this.state.adNum + 1
-      this.props.adsRequest(this.getRandomAds())
-      this.setState({adNum})
-      console.log(this.state.adNum - 1)
-      return <Ads data = {this.state.adsData[this.state.adNum - 1]}></Ads>}
+      return <Ads data = {this.state.adsData[this.state.page]}></Ads>
+    }
       else{
         return <Product price={price} date={date} size={size} face={face}/>
       }}
@@ -62,8 +59,9 @@ class HomeScreen extends Component {
     if(!fetching && this.props.productsInitialData !== productsInitialData){
       productsInitialData ? this.setState({productsInitialData:[...this.state.productsInitialData,...productsInitialData]}) : null
     }
-    if(!adsFetching && this.props.adsData !== adsData){
-      adsData ? this.setState({adsData:[...this.state.adsData,adsData]}) : null      
+    if(!adsFetching && this.props.adsData !== adsData && (this.state.adsData.length < 16)){
+      adsData ? this.setState({adsData:[...this.state.adsData,adsData]}) : null
+      this.props.adsRequest(this.getRandomAds())      
     }
   }
 
@@ -83,15 +81,22 @@ class HomeScreen extends Component {
     if (this.state.productsInitialData.length) {
       return (
         <View style={styles.container}>
-          <View>
-            <TouchableOpacity onPress =  {()=>this._handleSort("price")}>
+          <View style={styles.header}>
+            <TouchableOpacity 
+              onPress =  {()=>this._handleSort("price")}
+              style={styles.buttons}
+              >
               <Text>Price</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress =  {()=>this._handleSort("size")}>
-              <Text>size</Text>
+            <TouchableOpacity 
+              onPress =  {()=>this._handleSort("size")}
+              style={styles.buttons}>
+              <Text>Size</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress =  {()=>this._handleSort("id")}>
-              <Text>id</Text>
+            <TouchableOpacity 
+              onPress =  {()=>this._handleSort("id")}
+              style={styles.buttons}>
+              <Text>Id</Text>
             </TouchableOpacity>
           </View>
           <FlatList
@@ -106,7 +111,10 @@ class HomeScreen extends Component {
       )
     } else {
       return (
-        <View><Text>Waitiing</Text></View>
+        <View style={styles.container}>
+        <ActivityIndicator size="large"/>
+        <Text>Loading...</Text>
+      </View>
       )
     }
   }
