@@ -77,7 +77,6 @@ class HomeScreen extends Component {
   }
 
   render () {
-    console.log(this.state)
     if (this.state.productsInitialData.length) {
       return (
         <View style={styles.container}>

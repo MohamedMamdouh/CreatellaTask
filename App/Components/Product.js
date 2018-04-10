@@ -7,7 +7,6 @@ import styles from './Styles/ProductStyle'
 export default class Product extends Component {
   render () {
     const {price, date, size, face} = this.props
-
     return (
       <View style={styles.container}>
         <View style={styles.productView}>
@@ -16,7 +15,7 @@ export default class Product extends Component {
         <View style={styles.ProductDetailsView}>
           <Text> Price : {price}$ </Text>
           <Text> size : {size} </Text>
-          <Text> Date : {moment(date).fromNow()}</Text>
+          <Text> Date : {(moment().diff(moment(date), 'days') < 7) ? moment(date).fromNow() : moment(date).format('MMMM Do YYYY')}</Text>
         </View>
       </View>
     )
