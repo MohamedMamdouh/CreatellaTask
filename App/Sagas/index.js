@@ -7,11 +7,13 @@ import DebugConfig from '../Config/DebugConfig'
 
 import { StartupTypes } from '../Redux/StartupRedux'
 import { ProductsTypes } from '../Redux/ProductsRedux'
+import { AdsTypes } from '../Redux/AdsRedux'
 
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
 import { getProductsData } from './ProductsSagas'
+import { getAdsData } from './AdsSagas'
 
 /* ------------- API ------------- */
 
@@ -27,6 +29,7 @@ export default function * root () {
     takeLatest(StartupTypes.STARTUP, startup),
 
     // some sagas receive extra parameters in addition to an action
-    takeLatest(ProductsTypes.PRODUCT_REQUEST, getProductsData, api)
+    takeLatest(ProductsTypes.PRODUCT_REQUEST, getProductsData, api),
+    takeLatest(AdsTypes.ADS_REQUEST, getAdsData, api)
   ])
 }

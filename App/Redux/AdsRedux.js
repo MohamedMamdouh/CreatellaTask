@@ -4,19 +4,19 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  productRequest: ['_page', '_limit', '_sort'],
-  productSuccess: ['productsInitialData'],
-  productFailure: null
+  adsRequest: ['param'],
+  adsSuccess: ['adsData'],
+  adsFailure: null
 })
 
-export const ProductsTypes = Types
+export const AdsTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  productsInitialData: null,
-  fetching: null,
+  adsData: null,
+  adsFetching: null,
   error: null
 })
 
@@ -25,23 +25,23 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 // request the Initial Products
-export const request = (state, {page, limit, sort}) =>
-  state.merge({fetching: true})
+export const request = (state, {param}) =>
+  state.merge({adsFetching: true})
 
 // successful Initial Products lookup
 export const success = (state, action) => {
-  const { productsInitialData } = action
-  return state.merge({ fetching: false, error: null, productsInitialData })
+  const { adsData } = action
+  return state.merge({ adsFetching: false, error: null, adsData })
 }
 
 // failed to get the Initial Products
 export const failure = (state) =>
-  state.merge({ fetching: false, error: true, productsInitialData: null })
+  state.merge({ adsFetching: false, error: true, adsData: null })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.PRODUCT_REQUEST]: request,
-  [Types.PRODUCT_SUCCESS]: success,
-  [Types.PRODUCT_FAILURE]: failure
+  [Types.ADS_REQUEST]: request,
+  [Types.ADS_SUCCESS]: success,
+  [Types.ADS_FAILURE]: failure
 })

@@ -19,8 +19,6 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   contentContainer: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
+    width: Metrics.screenWidth
   }
 })
