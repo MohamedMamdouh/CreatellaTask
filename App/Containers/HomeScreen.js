@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, FlatList, View, StyleSheet, TouchableOpacity,ActivityIndicator} from 'react-native'
+import {Text, FlatList, View, StyleSheet, TouchableOpacity,ActivityIndicator} from 'react-native'
 import { connect } from 'react-redux'
 import PrductsActions from '../Redux/ProductsRedux'
-import AdsActions from '../Redux/AdsRedux'
 import Product from '../Components/Product'
 import Ads from '../Components/Ads'
-import { Images } from '../Themes'
 
 // Styles
 import styles from './Styles/HomeScreenStyles'
+
+//TODO: Error Handling
 
 class HomeScreen extends Component {
   constructor (props) {
@@ -22,10 +22,7 @@ class HomeScreen extends Component {
     }
   }
 
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
+  // This to Render Items of Products and also make decision for rendering Products or Ads
   _renderItem = ({item:{price, date, size, face},index}) => {
     if((index !== 0) && index % 20 === 0){
       return <Ads />
@@ -34,13 +31,16 @@ class HomeScreen extends Component {
       return <Product price={price} date={date} size={size} face={face}/>
     }}
       
+  // Extract Keys for List Item
   _keyExtractor = (item, index) => item.id;
 
+  //First Call of Product API after component mount
   componentDidMount(){
     let {page,limit,sort} = this.state
     this.props.productRequest(page,limit,sort)
   }
 
+  //Load more to prefetch date before the end of list beside load more 
   _handleLoadMore = () => {
     if(!this.props.fetching){
       let page = this.state.page + 1
@@ -51,13 +51,16 @@ class HomeScreen extends Component {
     }
   }
 
+  //Append new products to the list 
+  //Display message for '~ end of catalogue ~' if no products found
   componentWillReceiveProps(nextProps){
-    let {productsInitialData,fetching,adsData,adsFetching} = nextProps
+    let {productsInitialData,fetching} = nextProps
     if(!fetching && this.props.productsInitialData !== productsInitialData){
       productsInitialData.length > 0  ? this.setState({productsInitialData:[...this.state.productsInitialData,...productsInitialData]}) : alert('~ end of catalogue ~')
     }
   }
 
+  //Handling sort and also canceling sort
   _handleSort = (_sort) =>{
     if(this.state._sort !== _sort) {
       this.setState({
@@ -69,6 +72,7 @@ class HomeScreen extends Component {
     }
   }
 
+  //Sparated Component for the header 
   _headerComponent = () => {
     return(<View style={styles.header}>
       <TouchableOpacity 
@@ -95,6 +99,7 @@ class HomeScreen extends Component {
     </View>
   )}
 
+  //Render function and Container Started Here!! 
   render () {
     if (this.state.productsInitialData.length) {
       return (
@@ -110,7 +115,7 @@ class HomeScreen extends Component {
           />
         </View>
       )
-    } else {
+    }else{
       return (
         <View style={styles.container}>
         <ActivityIndicator size="large"/>
@@ -121,11 +126,13 @@ class HomeScreen extends Component {
   }
 }
 
+//Map Product Request function to props
 const mapDispatchToProps = dispatch => ({
   productRequest: (_page, _limit, _sort) => dispatch(PrductsActions.productRequest(_page, _limit, _sort)),
 })
 
-const mapStateToProps = ({products: {productsInitialData, fetching},ads:{adsData,adsFetching}}) => {
+//Get Product Data and fetching state from redux store state
+const mapStateToProps = ({products: {productsInitialData, fetching}}) => {
   return {
     productsInitialData,
     fetching,
