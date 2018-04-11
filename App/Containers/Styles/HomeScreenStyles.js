@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles } from '../../Themes/'
+import { Metrics, ApplicationStyles, Colors } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -10,15 +10,6 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#cfd8dc'
   },
-  logo: {
-    marginTop: Metrics.doubleSection,
-    height: Metrics.images.logo,
-    width: Metrics.images.logo,
-    resizeMode: 'contain'
-  },
-  centered: {
-    alignItems: 'center'
-  },
   contentContainer: {
     width: Metrics.screenWidth
   },
@@ -26,7 +17,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#00838f',
+    backgroundColor: Colors.primary,
     width: Metrics.screenWidth
   },
   buttons: {

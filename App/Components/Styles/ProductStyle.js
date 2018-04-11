@@ -9,7 +9,7 @@ export default StyleSheet.create({
     flex: 1,
     margin: 5,
     minWidth: 170,
-    maxWidth: 223,
+    maxWidth: Metrics.screenWidth / 2 - 10,
     height: 200,
     maxHeight: 304,
     backgroundColor: '#FFF'

@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import moment from 'moment'
 
+// Styles
 import styles from './Styles/ProductStyle'
 
+// Small Component for display products and set the date
 export default class Product extends Component {
   render () {
     const {price, date, size, face} = this.props

@@ -8,7 +8,6 @@ export function * getAdsData (api, action) {
 
   if (response) {
     const adsData = response
-    // do data conversion here if needed
     yield put(AdsActions.adsSuccess(adsData))
   } else {
     yield put(AdsActions.adsFailure())

@@ -8,8 +8,6 @@ export function * getProductsData (api, action) {
 
   if (response.ok) {
     const productsInitialData = response.data
-
-    // do data conversion here if needed
     yield put(PrductsActions.productSuccess(productsInitialData))
   } else {
     yield put(PrductsActions.productFailure())

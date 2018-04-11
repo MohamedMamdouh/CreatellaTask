@@ -24,17 +24,17 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Reducers ------------- */
 
-// request the Initial Products
+// request the Initial Ads
 export const request = (state, {param}) =>
   state.merge({adsFetching: true})
 
-// successful Initial Products lookup
+// successful Ad lookup
 export const success = (state, action) => {
   const { adsData } = action
   return state.merge({ adsFetching: false, error: null, adsData })
 }
 
-// failed to get the Initial Products
+// failed to get the Ad
 export const failure = (state) =>
   state.merge({ adsFetching: false, error: true, adsData: null })
 
