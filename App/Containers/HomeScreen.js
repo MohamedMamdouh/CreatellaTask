@@ -83,19 +83,24 @@ class HomeScreen extends Component {
           <View style={styles.header}>
             <TouchableOpacity 
               onPress =  {()=>this._handleSort("price")}
-              style={styles.buttons}
+              style={[styles.buttons,this.state.sort === "price"?{backgroundColor:'#4fb3bf'}:null]}
               >
               <Text>Price</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress =  {()=>this._handleSort("size")}
-              style={styles.buttons}>
+              style={[styles.buttons,this.state.sort === "size"?{backgroundColor:'#4fb3bf'}:null]}>
               <Text>Size</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               onPress =  {()=>this._handleSort("id")}
-              style={styles.buttons}>
+              style={[styles.buttons,this.state.sort === "id"?{backgroundColor:'#4fb3bf'}:null]}>
               <Text>Id</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress =  {()=>this._handleSort(null)}
+              style={[styles.buttons,!this.state.sort?{backgroundColor:'#4fb3bf'}:null]}>
+              <Text>None</Text>
             </TouchableOpacity>
           </View>
           <FlatList

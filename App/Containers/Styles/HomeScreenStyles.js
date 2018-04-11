@@ -7,7 +7,8 @@ export default StyleSheet.create({
     paddingBottom: Metrics.baseMargin,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1
+    flex: 1,
+    backgroundColor: '#cfd8dc'
   },
   logo: {
     marginTop: Metrics.doubleSection,
@@ -24,16 +25,19 @@ export default StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#00838f',
+    width: Metrics.screenWidth
   },
   buttons: {
     margin: 10,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#000',
     width: 60,
     height: 40,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderRadius: 10
   },
   horizontal: {
     flexDirection: 'row',

@@ -4,18 +4,19 @@ import { Metrics } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     borderColor: '#000',
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 10,
     flex: 1,
     margin: 5,
     minWidth: 170,
     maxWidth: 223,
     height: 200,
-    maxHeight: 304
+    maxHeight: 304,
+    backgroundColor: '#FFF'
   },
   productView: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#4fb3bf',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10
