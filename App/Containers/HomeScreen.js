@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Text, FlatList, View, StyleSheet, TouchableOpacity,ActivityIndicator} from 'react-native'
+import {Text, FlatList, View, StyleSheet, TouchableOpacity,ActivityIndicator,Alert} from 'react-native'
 import { connect } from 'react-redux'
 import PrductsActions from '../Redux/ProductsRedux'
 import Product from '../Components/Product'
@@ -116,12 +116,13 @@ class HomeScreen extends Component {
         </View>
       )
     }else{
-      return (
-        <View style={styles.container}>
-        <ActivityIndicator size="large"/>
-        <Text>Loading...</Text>
-      </View>
-      )
+        {this.props.error? Alert.alert('Error','Error occured, Please Retry',[{text: 'Retry', onPress: () => this._handleSort(null)}]): null}
+        return (
+          <View style={styles.container}>
+            <ActivityIndicator size="large"/>
+            <Text>Loading...</Text>
+          </View>
+        ) 
     }
   }
 }
@@ -132,10 +133,11 @@ const mapDispatchToProps = dispatch => ({
 })
 
 //Get Product Data and fetching state from redux store state
-const mapStateToProps = ({products: {productsInitialData, fetching}}) => {
+const mapStateToProps = ({products: {productsInitialData, fetching,error}}) => {
   return {
     productsInitialData,
     fetching,
+    error
   }
 }
 
