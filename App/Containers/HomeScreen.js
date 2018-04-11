@@ -15,33 +15,26 @@ class HomeScreen extends Component {
     super(props)
     this.state = {
       productsInitialData:[],
-      adsData:[],
       page: 1,
       sort: null,
       limit:15,
       sort:undefined,
-      adNum: 0 
     }
-  }
-
-  getRandomAds = ()=>{
-    return Math.floor(Math.random()*100)
   }
 
   _renderItem = ({item:{price, date, size, face},index}) => {
     if((index !== 0) && index % 20 === 0){
-      return <Ads data = {this.state.adsData[this.state.page]}></Ads>
+      return <Ads />
     }
-      else{
-        return <Product price={price} date={date} size={size} face={face}/>
-      }}
+    else{
+      return <Product price={price} date={date} size={size} face={face}/>
+    }}
       
-    _keyExtractor = (item, index) => item.id;
+  _keyExtractor = (item, index) => item.id;
 
   componentDidMount(){
     let {page,limit,sort} = this.state
     this.props.productRequest(page,limit,sort)
-    this.props.adsRequest(this.getRandomAds())
   }
 
   _handleLoadMore = () => {
@@ -58,10 +51,6 @@ class HomeScreen extends Component {
     let {productsInitialData,fetching,adsData,adsFetching} = nextProps
     if(!fetching && this.props.productsInitialData !== productsInitialData){
       productsInitialData ? this.setState({productsInitialData:[...this.state.productsInitialData,...productsInitialData]}) : null
-    }
-    if(!adsFetching && this.props.adsData !== adsData && (this.state.adsData.length < 16)){
-      adsData ? this.setState({adsData:[...this.state.adsData,adsData]}) : null
-      this.props.adsRequest(this.getRandomAds())      
     }
   }
 
@@ -126,15 +115,12 @@ class HomeScreen extends Component {
 
 const mapDispatchToProps = dispatch => ({
   productRequest: (_page, _limit, _sort) => dispatch(PrductsActions.productRequest(_page, _limit, _sort)),
-  adsRequest: (param) => dispatch(AdsActions.adsRequest(param))
 })
 
 const mapStateToProps = ({products: {productsInitialData, fetching},ads:{adsData,adsFetching}}) => {
   return {
     productsInitialData,
     fetching,
-    adsData,
-    adsFetching
   }
 }
 
