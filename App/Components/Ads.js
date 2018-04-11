@@ -15,9 +15,8 @@ class Ads extends Component {
   }
 
   //Get Random number 
-  //TODO: Depent the random number on date to never repeat
   getRandomAds = ()=>{
-    return Math.floor(Math.random()*1000)
+    return Math.floor(Math.random(new Date().getTime()) * 1000)
   }
 
   //Set the state with new value for component from redux store 
