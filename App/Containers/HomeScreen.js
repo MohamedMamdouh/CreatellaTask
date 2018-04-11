@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, FlatList, View, StyleSheet, TouchableOpacity,ActivityIndicator,Modal,TouchableHighlight} from 'react-native'
+import { ScrollView, Text, FlatList, View, StyleSheet, TouchableOpacity,ActivityIndicator} from 'react-native'
 import { connect } from 'react-redux'
 import PrductsActions from '../Redux/ProductsRedux'
 import AdsActions from '../Redux/AdsRedux'
@@ -19,7 +19,6 @@ class HomeScreen extends Component {
       sort: null,
       limit:15,
       sort:undefined,
-      modalVisible: false
     }
   }
 
@@ -55,7 +54,7 @@ class HomeScreen extends Component {
   componentWillReceiveProps(nextProps){
     let {productsInitialData,fetching,adsData,adsFetching} = nextProps
     if(!fetching && this.props.productsInitialData !== productsInitialData){
-      productsInitialData.length > 0  ? this.setState({productsInitialData:[...this.state.productsInitialData,...productsInitialData]}) : this.setState({modalVisible:true})
+      productsInitialData.length > 0  ? this.setState({productsInitialData:[...this.state.productsInitialData,...productsInitialData]}) : alert('~ end of catalogue ~')
     }
   }
 
@@ -96,27 +95,6 @@ class HomeScreen extends Component {
               style={[styles.buttons,!this.state.sort?{backgroundColor:'#4fb3bf'}:null]}>
               <Text>None</Text>
             </TouchableOpacity>
-            <Modal
-            animationType="slide"
-            transparent={false}
-            visible={this.state.modalVisible}
-            onRequestClose={() => {
-              alert('Modal has been closed.');
-            }}>
-            <View style={{marginTop: 22}}>
-              <View>
-                <Text>~ end of catalogue ~</Text>
-  
-                <TouchableHighlight
-                  onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible);
-                  }}>
-                  <Text>Hide Modal</Text>
-                </TouchableHighlight>
-              </View>
-            </View>
-          </Modal>
-  
           </View>
           <FlatList
             data={this.state.productsInitialData}
